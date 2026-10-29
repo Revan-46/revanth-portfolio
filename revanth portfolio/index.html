@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Portfolio of Revanth M, Java developer and QA tester in Bengaluru.">
+<title>Revanth M Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one long scrolling page. A glowing vertical rail runs down the hero (taken from the reference),
+   followed by tilt cards, a vertical timeline, skill groups and project cards on a deep navy starfield. */
+:root{
+  --bg:#050816;          /* primary navy */
+  --surface:#151030;     /* tertiary card */
+  --surface-2:#100d25;
+  --ink:#f3f3f3;
+  --muted:#aaa6c3;
+  --violet:#915eff;
+  --violet-soft:#804dee;
+  --line:rgba(170,166,195,.18);
+  --ok:#38ef7d;
+  --font-display:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--font-display);font-size:16px;line-height:1.6;
+  padding-block:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  overflow-x:hidden;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,header,footer{position:relative;z-index:1}
+.wrap{max-width:1180px;margin:0 auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px;border-radius:6px}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px));background:rgba(5,8,22,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px;flex-wrap:wrap}
+.brand{font-weight:700;font-size:18px;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand i{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--violet),#3c3350);display:inline-block}
+.nav-links{display:flex;gap:6px 22px;list-style:none;padding:0;flex-wrap:wrap}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding-block:72px 56px}
+.hero-l{display:flex;gap:20px}
+.rail{display:flex;flex-direction:column;align-items:center;padding-top:10px}
+.rail b{width:18px;height:18px;border-radius:50%;background:var(--violet);flex:none}
+.rail span{width:4px;flex:1;min-height:200px;background:linear-gradient(to bottom,var(--violet),rgba(60,51,80,0))}
+.hero h1{font-weight:800;font-size:clamp(38px,6.4vw,72px);line-height:1.08}
+.hero h1 em{font-style:normal;color:var(--violet)}
+.hero p.sub{color:#dfd9ff;font-weight:500;font-size:clamp(16px,2.2vw,22px);margin-top:14px;max-width:34em}
+.loc{font-family:var(--font-mono);font-size:13px;color:var(--muted);margin-bottom:6px;letter-spacing:.04em}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-block;padding:12px 24px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:inherit;transition:transform .2s,background .2s}
+.btn.p{background:var(--violet);color:#fff;box-shadow:0 10px 40px -10px var(--violet)}
+.btn.g{border-color:var(--line);color:var(--ink);background:rgba(21,16,48,.6)}
+.btn:hover{transform:translateY(-2px)}
+
+.slider{background:linear-gradient(160deg,#1c1640,#151030);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 35px 120px -15px #211e35;min-width:0}
+.sl-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.sl-head h3{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.sl-count{font-family:var(--font-mono);font-size:13px;color:var(--muted)}
+.viewport{overflow:hidden;border-radius:14px}
+.track{display:flex;transition:transform .6s cubic-bezier(.22,.8,.3,1);touch-action:pan-y}
+.slide{flex:0 0 100%;min-width:0;padding:6px 2px 4px}
+.slide h4{font-size:22px;font-weight:700;margin-bottom:14px;background:linear-gradient(90deg,#fff,#bba6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.slide .chips{gap:10px}
+.slide .chip{font-size:15px;padding:8px 14px}
+.sl-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px}
+.dots{display:flex;gap:8px;flex-wrap:wrap}
+.dots button{width:9px;height:9px;padding:0;border-radius:99px;border:0;background:rgba(170,166,195,.35);cursor:pointer;transition:width .3s,background .3s}
+.dots button[aria-current="true"]{width:26px;background:var(--violet)}
+.arrows{display:flex;gap:8px}
+.arrows button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(21,16,48,.8);color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:border-color .2s,background .2s}
+.arrows button:hover{border-color:var(--violet);background:rgba(145,94,255,.18)}
+
+/* sections */
+section{padding-block:56px}
+.eyebrow{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+h2{font-weight:800;font-size:clamp(32px,5vw,56px);line-height:1.1;margin-top:4px;text-wrap:balance}
+.lead{color:#c9c5de;max-width:62ch;margin-top:20px;font-size:17px}
+.lead b{color:var(--ink);font-weight:600}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:40px}
+.tilt{transform-style:preserve-3d;transition:transform .15s ease-out;will-change:transform}
+.green-pink{padding:1px;border-radius:20px;background:linear-gradient(90deg,#00cea8,#bf61ff);box-shadow:0 35px 120px -15px #211e35;min-width:0}
+.card{background:var(--surface);border-radius:20px;padding:26px 22px;min-height:230px;height:100%;display:flex;flex-direction:column;gap:10px}
+.card .ic{width:44px;height:44px;border-radius:12px;background:rgba(145,94,255,.16);display:grid;place-items:center;color:var(--violet);margin-bottom:6px}
+.card h3{font-size:19px;font-weight:700}
+.card p{color:var(--muted);font-size:14.5px}
+
+/* timeline */
+.tl{position:relative;margin-top:44px;padding-left:34px;display:grid;gap:26px}
+.tl::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:3px;background:linear-gradient(to bottom,var(--violet),rgba(145,94,255,.08))}
+.tl article{position:relative;background:var(--surface);border-radius:20px;padding:24px 26px;border-bottom:8px solid #232631;min-width:0}
+.tl article::before{content:"";position:absolute;left:-34px;top:28px;width:21px;height:21px;border-radius:50%;background:var(--bg);border:5px solid var(--violet)}
+.tl .when{font-family:var(--font-mono);font-size:13px;color:var(--muted)}
+.tl h3{font-size:22px;font-weight:700;margin-top:2px}
+.tl .org{color:var(--muted);font-weight:600;font-size:15px}
+.tl ul{margin:14px 0 0;padding-left:18px;display:grid;gap:6px;color:#d6d2ea;font-size:14.5px}
+.tl li::marker{color:var(--violet)}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px;margin-top:40px}
+.sk{background:var(--surface-2);border:1px solid var(--line);border-radius:18px;padding:22px;min-width:0}
+.sk h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 12px;border-radius:999px;background:rgba(145,94,255,.12);border:1px solid rgba(145,94,255,.28);font-size:13.5px;font-weight:500}
+
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:26px;margin-top:40px}
+.proj{background:var(--surface);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px;height:100%;min-width:0}
+.proj .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.proj h3{font-size:22px;font-weight:700;line-height:1.25}
+.proj .gh{flex:none;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#434343,#000);display:grid;place-items:center;text-decoration:none;border:1px solid var(--line)}
+.proj p.d{color:var(--muted);font-size:14.5px}
+.proj ul{padding-left:18px;color:#d6d2ea;font-size:14px;display:grid;gap:4px}
+.proj li::marker{color:var(--violet)}
+.tags{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:auto;padding-top:6px;font-size:14px;font-weight:500}
+.tags span::before{content:"#"}
+.blue{color:#56ccf2}.green{color:#38ef7d}.pink{color:#fc6767}.amber{color:#f5af19}
+
+.certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:32px}
+.cert{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-weight:500;font-size:15px;display:flex;gap:12px;align-items:center}
+.cert i{width:10px;height:10px;border-radius:50%;background:var(--violet);flex:none}
+
+/* contact */
+.contact{background:linear-gradient(160deg,#1a1440,#100d25);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,5vw,48px);display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
+.mail{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:22px}
+.mail code{font-family:var(--font-mono);font-size:15px;background:#0c0924;border:1px solid var(--line);border-radius:10px;padding:10px 14px;overflow-wrap:anywhere;user-select:all}
+.links{display:grid;gap:12px}
+.links a{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 18px;border:1px solid var(--line);border-radius:14px;background:rgba(21,16,48,.7);text-decoration:none;font-weight:600;transition:border-color .2s,transform .2s}
+.links a:hover{border-color:var(--violet);transform:translateX(3px)}
+.links small{color:var(--muted);font-weight:400;font-family:var(--font-mono);font-size:12.5px;overflow-wrap:anywhere;text-align:right}
+footer{padding-block:40px 56px;text-align:center;color:var(--muted);font-size:14px}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;padding-block:48px 32px}
+  .rail span{min-height:120px}
+  .contact{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .nav-links{gap:4px 16px}
+  .tl{padding-left:28px}
+  .tl article{padding:20px 18px}
+  .tl article::before{left:-28px}
+  .tl::before{left:6px}
+  .links small{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .tilt,.btn,.links a,.track,.dots button{transition:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<nav aria-label="Primary">
+  <div class="nav-in">
+    <a class="brand" href="#top"><i></i>Revanth&nbsp;M</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top" class="wrap">
+  <header class="hero">
+    <div class="hero-l">
+      <div class="rail" aria-hidden="true"><b></b><span></span></div>
+      <div>
+        <div class="loc">BENGALURU, INDIA</div>
+        <h1>Hi, I'm <em>Revanth</em></h1>
+        <p class="sub">Java developer and QA tester. I build Java and web applications, test them manually, and catch bugs in games too.</p>
+        <div class="cta">
+          <a class="btn p" href="#work">See my work</a>
+          <a class="btn g" href="#contact">Get in touch</a>
+        </div>
+      </div>
+    </div>
+
+    <aside class="slider" id="slider" aria-roledescription="carousel" aria-label="Skills">
+      <div class="sl-head"><h3>My skills</h3><span class="sl-count" id="slcount">1 / 7</span></div>
+      <div class="viewport"><div class="track"><div class="slide" role="group" aria-roledescription="slide"><h4>Programming languages</h4><div class="chips"><span class="chip">Java</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">JavaScript</span></div></div><div class="slide" role="group" aria-roledescription="slide"><h4>Frameworks and libraries</h4><div class="chips"><span class="chip">Spring Boot</span><span class="chip">Hibernate</span><span class="chip">React</span><span class="chip">Django</span></div></div><div class="slide" role="group" aria-roledescription="slide"><h4>Java concepts</h4><div class="chips"><span class="chip">OOP</span><span class="chip">Multithreading</span><span class="chip">JDBC</span><span class="chip">Exception Handling</span><span class="chip">SDLC</span><span class="chip">Agile / Scrum</span></div></div><div class="slide" role="group" aria-roledescription="slide"><h4>Testing</h4><div class="chips"><span class="chip">Manual Testing</span><span class="chip">Test Case Design</span><span class="chip">Regression Testing</span><span class="chip">Smoke Testing</span><span class="chip">Defect Reporting</span></div></div><div class="slide" role="group" aria-roledescription="slide"><h4>Databases</h4><div class="chips"><span class="chip">MySQL</span><span class="chip">Oracle</span><span class="chip">SQL</span></div></div><div class="slide" role="group" aria-roledescription="slide"><h4>Tools and platforms</h4><div class="chips"><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">Jira</span><span class="chip">Excel</span><span class="chip">Word</span><span class="chip">PowerPoint</span><span class="chip">Visual Studio Code</span><span class="chip">SQL Workbench</span></div></div><div class="slide" role="group" aria-roledescription="slide"><h4>Web technologies</h4><div class="chips"><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">RESTful APIs</span></div></div></div></div>
+      <div class="sl-foot">
+        <div class="dots" id="sldots"></div>
+        <div class="arrows">
+          <button type="button" id="slprev" aria-label="Previous skills"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button type="button" id="slnext" aria-label="Next skills"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+    </aside>
+  </header>
+
+  <section id="about">
+    <div class="eyebrow">Introduction</div>
+    <h2>Overview</h2>
+    <p class="lead">I'm a <b>B.Tech Computer Science and Engineering graduate</b> (Dr. MGR University, 2025) and a former <b>Software Engineer Intern at KodNest Technologies</b>. I develop Java applications with JDBC and MySQL, and I test software manually: writing test cases, running functional, smoke, regression and cross-browser tests, and documenting defects with steps to reproduce, expected and actual results in Jira. I also build with React and Django, and I play mobile games, which is how I found and reported a map boundary glitch in Free Fire.</p>
+
+    <div class="cards">
+      <div class="tilt green-pink"><div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Java development</h3><p>Core Java, OOP, multithreading and exception handling, with JDBC and MySQL. Basic Spring Boot and Hibernate.</p></div></div>
+      <div class="tilt green-pink"><div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3>Manual testing</h3><p>Test cases, functional, smoke, regression, UI and compatibility testing, with defect reports in Jira.</p></div></div>
+      <div class="tilt green-pink"><div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg></div><h3>Game eye</h3><p>Regular player of casino, slots, bingo and card games. Reported a Free Fire outer zone glitch.</p></div></div>
+      <div class="tilt green-pink"><div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg></div><h3>Web and data</h3><p>React and Django apps with REST APIs, plus LSTM and XGBoost forecasting on Python and SQL pipelines.</p></div></div>
+      </div>
+  </section>
+
+  <section id="experience">
+    <div class="eyebrow">What I've done so far</div>
+    <h2>Experience and education</h2>
+    <div class="tl">
+      <article>
+        <div class="when">JUN 2025 – JAN 2026</div>
+        <h3>Software Engineer Intern</h3>
+        <div class="org">KodNest Technologies</div>
+        <ul>
+          <li>Developed and tested Java-based applications following SDLC and Agile methodologies.</li>
+          <li>Implemented SQL queries and database operations using JDBC and MySQL.</li>
+          <li>Performed manual testing, test case creation, regression and smoke testing to verify application behavior.</li>
+          <li>Debugged application issues, conducted root cause analysis, and documented fixes.</li>
+          <li>Collaborated with cross-functional teams using Git, GitHub, and Jira.</li>
+        </ul>
+      </article>
+      <article>
+        <div class="when">2021 – 2025</div>
+        <h3>B.Tech, Computer Science and Engineering</h3>
+        <div class="org">Dr. MGR University</div>
+        <ul>
+          <li>CGPA 8.15 / 10</li>
+          <li>Coursework: Data Structures and Algorithms, DBMS, Operating Systems, Computer Networks.</li>
+        </ul>
+      </article>
+      <article>
+        <div class="when">2019 – 2021</div>
+        <h3>Higher Secondary (Class XII)</h3>
+        <div class="org">Sri Vijay Vidyalaya Matric Higher Secondary School</div>
+        <ul><li>85.4%</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="eyebrow">What I work with</div>
+    <h2>Skills</h2>
+    <div class="skills">
+      <div class="sk"><h3>Java development</h3><div class="chips"><span class="chip">Core Java</span><span class="chip">OOP</span><span class="chip">Multithreading</span><span class="chip">Exception Handling</span><span class="chip">JDBC</span><span class="chip">Spring Boot (basics)</span><span class="chip">Hibernate</span><span class="chip">MySQL</span><span class="chip">Oracle</span></div></div>
+      <div class="sk"><h3>Testing</h3><div class="chips"><span class="chip">Manual Testing</span><span class="chip">Functional</span><span class="chip">Smoke</span><span class="chip">Regression</span><span class="chip">UI Testing</span><span class="chip">Compatibility</span><span class="chip">Positive and Negative</span><span class="chip">Test Case Design</span><span class="chip">Defect Reporting</span></div></div>
+      <div class="sk"><h3>Tools</h3><div class="chips"><span class="chip">Jira</span><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">Excel</span><span class="chip">Word</span><span class="chip">PowerPoint</span><span class="chip">Google Docs</span><span class="chip">Sheets</span><span class="chip">Slides</span><span class="chip">SQL Workbench</span></div></div>
+      <div class="sk"><h3>Web and scripting</h3><div class="chips"><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">SQL</span><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">React</span><span class="chip">Angular</span><span class="chip">Django</span><span class="chip">REST APIs</span></div></div>
+      <div class="sk"><h3>Process</h3><div class="chips"><span class="chip">SDLC</span><span class="chip">STLC</span><span class="chip">Agile / Scrum</span><span class="chip">Root Cause Analysis</span><span class="chip">Requirement Analysis</span></div></div>
+      <div class="sk"><h3>Data and ML</h3><div class="chips"><span class="chip">LSTM</span><span class="chip">XGBoost</span><span class="chip">Time-Series Forecasting</span><span class="chip">Pandas</span></div></div>
+      </div>
+  </section>
+
+  <section id="work">
+    <div class="eyebrow">My work</div>
+    <h2>Projects</h2>
+    <p class="lead">Testing work first, then the apps I built. My Java work is under Experience, from my internship at KodNest.</p>
+    <div class="projects">
+      <div class="tilt green-pink"><article class="proj">
+        <div class="top"><h3>Manual Testing of an E-Commerce Website</h3></div>
+        <ul>
+          <li>Prepared and executed test cases for login, product search, shopping cart, and checkout.</li>
+          <li>Ran functional, UI, smoke, and regression tests against expected results.</li>
+          <li>Logged scenarios, results and pass/fail status in Excel, and defects with steps to reproduce, expected and actual results.</li>
+          <li>Tested positive and negative paths, and checked behavior across Chrome, Safari and Brave.</li>
+        </ul>
+        <div class="tags"><span class="blue">manual-testing</span><span class="green">jira</span><span class="pink">excel</span><span class="amber">cross-browser</span></div>
+      </article></div>
+
+      <div class="tilt green-pink"><article class="proj">
+        <div class="top"><h3>Stock and Sales Forecasting</h3>
+          <a class="gh" href="https://github.com/Revan-46" target="_blank" rel="noopener" aria-label="Revanth on GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg></a></div>
+        <p class="d">Time-series forecasting models that predict weekly and daily sales and stock inventory.</p>
+        <ul>
+          <li>Built LSTM and XGBoost models and improved forecast accuracy by 18%.</li>
+          <li>Cleaned and processed 1M+ records with Python and SQL pipelines, including anomaly detection.</li>
+          <li>Cut SQL query execution time by 30%.</li>
+        </ul>
+        <div class="tags"><span class="blue">python</span><span class="green">lstm</span><span class="pink">xgboost</span><span class="amber">sql</span></div>
+      </article></div>
+
+      <div class="tilt green-pink"><article class="proj">
+        <div class="top"><h3>MealToday</h3>
+          <a class="gh" href="https://github.com/Revan-46" target="_blank" rel="noopener" aria-label="Revanth on GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg></a></div>
+        <p class="d">Django web application for restaurant and menu management.</p>
+        <ul>
+          <li>Role-based access for Admin and Customer with secure login and session handling.</li>
+          <li>Dynamic pages in HTML, CSS and Django Templates, built in the MVC pattern.</li>
+          <li>Tested the app and fixed routing, template and database issues.</li>
+        </ul>
+        <div class="tags"><span class="blue">django</span><span class="green">python</span><span class="pink">sqlite</span><span class="amber">git</span></div>
+      </article></div>
+
+      <div class="tilt green-pink"><article class="proj">
+        <div class="top"><h3>TodoVerse</h3>
+          <a class="gh" href="https://github.com/Revan-46" target="_blank" rel="noopener" aria-label="Revanth on GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg></a></div>
+        <p class="d">Responsive task management app built with React.</p>
+        <ul>
+          <li>Reusable components and hooks (useState, useEffect) for dynamic task handling.</li>
+          <li>Task creation, categorization, prioritization and completion tracking, saved with localStorage.</li>
+          <li>Built with Vite, ESLint and GitHub.</li>
+        </ul>
+        <div class="tags"><span class="blue">react</span><span class="green">vite</span><span class="pink">javascript</span></div>
+      </article></div>
+    </div>
+
+    <div class="certs">
+      <div class="cert"><i></i>Microsoft Azure Fundamentals</div>
+      <div class="cert"><i></i>SQL Advanced, HackerRank</div>
+      <div class="cert"><i></i>SQL Basics, HackerRank</div>
+      <div class="cert"><i></i>Internet of Things, NPTEL</div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact">
+      <div>
+        <div class="eyebrow">Get in touch</div>
+        <h2>Contact</h2>
+        <p class="lead">I'm looking for Java developer, software engineer, QA tester and manual testing roles in Bengaluru. Send me a message and I'll reply.</p>
+        <div class="mail">
+          <code id="email">rajrevanth09@gmail.com</code>
+          <button class="btn p" id="copy" type="button">Copy email</button>
+        </div>
+      </div>
+      <div class="links">
+        <a href="https://www.linkedin.com/in/revanthmuthu" target="_blank" rel="noopener">LinkedIn <small>linkedin.com/in/revanthmuthu</small></a>
+        <a href="https://github.com/Revan-46" target="_blank" rel="noopener">GitHub <small>github.com/Revan-46</small></a>
+        <a href="Revanth_M_QA_Resume.pdf" target="_blank" rel="noopener">View resume <small>PDF</small></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Revanth M</footer>
+
+<script>
+/* starfield */
+(function(){
+  var c=document.getElementById('stars'),x=c.getContext('2d'),S=[],W,H,dpr=Math.min(window.devicePixelRatio||1,2);
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){W=c.width=innerWidth*dpr;H=c.height=innerHeight*dpr;S=[];var n=Math.round(innerWidth*innerHeight/9000);for(var i=0;i<n;i++)S.push({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*1.2+.3)*dpr,p:Math.random()*6.28,s:Math.random()*.02+.006})}
+  function draw(t){x.clearRect(0,0,W,H);for(var i=0;i<S.length;i++){var a=S[i],o=.35+.4*Math.sin(a.p+(still?0:t*a.s*.06));x.globalAlpha=Math.max(.08,o);x.fillStyle=i%7===0?'#b9a2ff':'#fff';x.beginPath();x.arc(a.x,a.y,a.r,0,6.28);x.fill()}x.globalAlpha=1;if(!still)requestAnimationFrame(draw)}
+  size();addEventListener('resize',function(){size();if(still)draw(0)});requestAnimationFrame(draw);
+})();
+
+/* skills slider */
+(function(){
+  var root=document.getElementById('slider');if(!root)return;
+  var track=root.querySelector('.track'),n=track.children.length,i=0,timer=null,dots=document.getElementById('sldots'),cnt=document.getElementById('slcount');
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var btns=[];for(var k=0;k<n;k++){(function(k){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Go to slide '+(k+1));b.addEventListener('click',function(){go(k);restart()});dots.appendChild(b);btns.push(b)})(k)}
+  function go(k){i=(k+n)%n;track.style.transform='translateX('+(-100*i)+'%)';cnt.textContent=(i+1)+' / '+n;btns.forEach(function(b,j){b.setAttribute('aria-current',j===i?'true':'false')})}
+  function stop(){if(timer){clearInterval(timer);timer=null}}
+  function play(){if(still||timer)return;timer=setInterval(function(){if(!document.hidden)go(i+1)},3600)}
+  function restart(){stop();play()}
+  document.getElementById('slprev').addEventListener('click',function(){go(i-1);restart()});
+  document.getElementById('slnext').addEventListener('click',function(){go(i+1);restart()});
+  root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',play);
+  root.addEventListener('focusin',stop);root.addEventListener('focusout',play);
+  var x0=null;
+  root.addEventListener('pointerdown',function(e){x0=e.clientX});
+  root.addEventListener('pointerup',function(e){if(x0===null)return;var d=e.clientX-x0;x0=null;if(Math.abs(d)>45){go(d<0?i+1:i-1);restart()}});
+  go(0);play();
+})();
+
+/* tilt cards (pointer devices only) */
+(function(){
+  if(!window.matchMedia('(hover: hover) and (pointer: fine)').matches)return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  document.querySelectorAll('.tilt').forEach(function(el){
+    el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
+      el.style.transform='perspective(900px) rotateY('+(px*10).toFixed(2)+'deg) rotateX('+(-py*10).toFixed(2)+'deg) scale(1.02)'});
+    el.addEventListener('mouseleave',function(){el.style.transform=''});
+  });
+})();
+
+/* copy email */
+(function(){
+  var b=document.getElementById('copy'),t=document.getElementById('email');
+  b.addEventListener('click',function(){
+    function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy email'},1800)}
+    function sel(){var r=document.createRange();r.selectNodeContents(t);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press Ctrl+C';setTimeout(function(){b.textContent='Copy email'},2400)}
+    try{navigator.clipboard.writeText(t.textContent).then(done,sel)}catch(e){sel()}
+  });
+})();
+</script>
+
+</body>
+</html>
